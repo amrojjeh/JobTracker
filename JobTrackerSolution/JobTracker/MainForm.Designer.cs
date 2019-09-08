@@ -51,7 +51,7 @@
 			this.label5 = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
 			this.label3 = new System.Windows.Forms.Label();
-			this.addBtn = new System.Windows.Forms.Button();
+			this.addLogBtn = new System.Windows.Forms.Button();
 			this.deleteBtn = new System.Windows.Forms.Button();
 			this.modifyBtn = new System.Windows.Forms.Button();
 			this.saveBtn = new System.Windows.Forms.Button();
@@ -280,16 +280,16 @@
 			this.label3.TabIndex = 0;
 			this.label3.Text = "Year";
 			// 
-			// addBtn
+			// addLogBtn
 			// 
-			this.addBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-			this.addBtn.Location = new System.Drawing.Point(19, 415);
-			this.addBtn.Name = "addBtn";
-			this.addBtn.Size = new System.Drawing.Size(75, 23);
-			this.addBtn.TabIndex = 9;
-			this.addBtn.Text = "Add";
-			this.addBtn.UseVisualStyleBackColor = true;
-			this.addBtn.Click += new System.EventHandler(this.AddB_Click);
+			this.addLogBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+			this.addLogBtn.Location = new System.Drawing.Point(19, 415);
+			this.addLogBtn.Name = "addLogBtn";
+			this.addLogBtn.Size = new System.Drawing.Size(75, 23);
+			this.addLogBtn.TabIndex = 9;
+			this.addLogBtn.Text = "Add";
+			this.addLogBtn.UseVisualStyleBackColor = true;
+			this.addLogBtn.Click += new System.EventHandler(this.AddLogBtn_Click);
 			// 
 			// deleteBtn
 			// 
@@ -421,7 +421,7 @@
 			this.Controls.Add(this.label6);
 			this.Controls.Add(this.modifyBtn);
 			this.Controls.Add(this.deleteBtn);
-			this.Controls.Add(this.addBtn);
+			this.Controls.Add(this.addLogBtn);
 			this.Controls.Add(this.panel1);
 			this.Controls.Add(this.logLst);
 			this.Controls.Add(this.label1);
@@ -467,7 +467,7 @@
 		private System.Windows.Forms.TextBox textBox1;
 		private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
-		private System.Windows.Forms.Button addBtn;
+		private System.Windows.Forms.Button addLogBtn;
 		private System.Windows.Forms.Button deleteBtn;
 		private System.Windows.Forms.Button modifyBtn;
 		private System.Windows.Forms.Button saveBtn;
