@@ -28,7 +28,9 @@ namespace JobTrackerLibrary
 		{
 			if (OverlappingLogException(log))
 				throw new ArgumentException("Cannot set a log that takes place during another log in the same job", "log");
-			Logs.Add(log);
+
+			int index = Logs.BinarySearch(log);
+			Logs.Insert(~index, log);
 		}
 
 		public bool OverlappingLogException(Log log)

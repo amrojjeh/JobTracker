@@ -117,5 +117,17 @@ namespace JobTrackerLibrary.Tests
 			if (expected) Assert.True(log.Equals(log2));
 			else Assert.False(log.Equals(log2));
 		}
+
+		[Fact]
+		public void CompareTo_Date()
+		{
+			Log log = new Log(2019, 9, 20, new Time(3, 15), new Time(4, 15));
+			Log log2 = new Log(2019, 9, 19, new Time(3, 15), new Time(4, 15));
+
+			// Log should be 'bigger' or 'later' than log2
+			bool expected = true;
+			bool actual = log.CompareTo(log2) > 0;
+			Assert.Equal(actual, expected);
+		}
 	}
 }

@@ -103,11 +103,17 @@ namespace JobTrackerLibrary
 			return start.Hour == end.Hour && start.Minute == end.Minute;
 		}
 
+		public DateTime TimeToDateTime(Time time)
+		{
+			return new DateTime(Date.Year, Date.Month, Date.Day, time.Hour, time.Minute, 0, 0);
+		}
+
 		public int CompareTo(Log other)
 		{
-			long thisValue = Date.Ticks + Start.GetMinutes();
-			long otherValue = other.Date.Ticks + other.Start.GetMinutes();
-			return (int)(thisValue - otherValue);
+			DateTime thisDate = TimeToDateTime(Start);
+			DateTime otherDate = other.TimeToDateTime(other.Start);
+
+			return thisDate.CompareTo(otherDate);
 		}
 		public double GetEstimatedDuration() // Returns duration in hours
 		{

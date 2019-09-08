@@ -84,7 +84,7 @@ namespace JobTrackerUI
 			if (e.KeyCode == Keys.Enter) CreateJob();
 		}
 
-		private void AddB_Click(object sender, System.EventArgs e)
+		private void AddLogBtn_Click(object sender, System.EventArgs e)
 		{
 			if (jobCB.Text == "")
 			{
@@ -104,7 +104,7 @@ namespace JobTrackerUI
 			bool isLogSelected = logLst.SelectedItems.Count != 0;
 			bool isSingleLogSelected = logLst.SelectedItems.Count == 1;
 
-			addBtn.Enabled = isJobSelected;
+			addLogBtn.Enabled = isJobSelected;
 			deleteBtn.Enabled = isLogSelected;
 			modifyBtn.Enabled = isSingleLogSelected;
 			saveBtn.Enabled = isJobSelected;
