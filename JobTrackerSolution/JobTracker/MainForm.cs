@@ -43,7 +43,7 @@ namespace JobTrackerUI
 		private void AddLogToList(Log log)
 		{
 			double duration = log.GetEstimatedDuration();
-			string[] items = { log.Date.ToLongDateString(), FormattedTime.Get12Time(log.Start), FormattedTime.Get12Time(log.End), $"{duration} hour{(duration == 1 ? 's' : ' ')}" };
+			string[] items = { log.Date.ToLongDateString(), FormattedTime.Get12Time(log.Start), FormattedTime.Get12Time(log.End), $"{duration} hour{(duration == 1 ? ' ' : 's')}" };
 			ListViewItem item = new ListViewItem(items)
 			{
 				Tag = log
