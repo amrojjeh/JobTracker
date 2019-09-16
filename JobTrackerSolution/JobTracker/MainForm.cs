@@ -1,5 +1,6 @@
 ﻿using JobTrackerLibrary;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Drawing;
 using System.Windows.Forms;
@@ -8,6 +9,12 @@ namespace JobTrackerUI
 {
 	public partial class MainForm : Form
 	{
+		ComboBox.ObjectCollection availableYears;
+		ComboBox.ObjectCollection availableMonths;
+		ComboBox.ObjectCollection availableDays;
+
+		Job selectedJob;
+
 		User user = new User();
 		// Should the user store the save directory?
 		// I think so because if there were two seperate users using the same computer
@@ -17,6 +24,9 @@ namespace JobTrackerUI
 		public MainForm()
 		{
 			InitializeComponent();
+			availableYears = availableYearsCB.Items;
+			availableMonths = availableMonthsCB.Items;
+			availableDays = availableDaysCB.Items;
 			FormClosing += MainForm_FormClosing;
 		}
 
@@ -40,6 +50,13 @@ namespace JobTrackerUI
 			}
 		}
 
+		private void AddDateToFilterPanel(DateTime date)
+		{
+			if (!availableYears.Contains(date.Year)) availableYears.Add(date.Year);
+			if (!availableMonths.Contains(date.Month)) availableMonths.Add(date.Month);
+			if (!availableDays.Contains(date.Day)) availableDays.Add(date.Day);
+		}
+
 		private void AddLogToList(Log log)
 		{
 			double duration = log.GetEstimatedDuration();
@@ -49,13 +66,19 @@ namespace JobTrackerUI
 				Tag = log
 			};
 			logLst.Items.Add(item);
+			AddDateToFilterPanel(log.Date);
 		}
 
 		public void UpdateLogList()
 		{
 			logLst.Items.Clear();
 			if (jobCB.SelectedItem == null) return;
-			((Job)jobCB.SelectedItem).ForEach((log) => AddLogToList(log));
+			if (availableYearsCB.SelectedIndex != -1 || availableMonthsCB.SelectedIndex != -1 || availableDaysCB.SelectedIndex != -1)
+			{
+				LogFilter.SetDate((int?)availableYearsCB.SelectedItem, (int?)availableMonthsCB.SelectedItem, (int?)availableDaysCB.SelectedItem);
+				LogFilter.FilterLogs(selectedJob).ForEach(x => AddLogToList(x));
+			}
+			else selectedJob.ForEach((log) => AddLogToList(log));
 		}
 
 		private void CreateJob()
@@ -91,7 +114,7 @@ namespace JobTrackerUI
 				MessageBox.Show("Must select job before you can add logs", "Error", MessageBoxButtons.OK);
 				return;
 			}
-			NewLogForm form = new NewLogForm((Job)jobCB.SelectedItem);
+			NewLogForm form = new NewLogForm(selectedJob);
 			form.ShowDialog();
 			UpdateLogList();
 			form.Dispose();
@@ -119,6 +142,15 @@ namespace JobTrackerUI
 			if (user.Username != "") Display_Username();
 		}
 
+		private void FindAvailableDates(Job job)
+		{
+			availableYears.Clear();
+			availableMonths.Clear();
+			availableDays.Clear();
+
+			job.ForEach(x => AddDateToFilterPanel(x.Date));
+		}
+
 		private void Display_Username()
 		{
 			Text = $"Job Tracker - {user.Username}";
@@ -126,7 +158,9 @@ namespace JobTrackerUI
 
 		private void JobCB_SelectedIndexChanged(object sender, EventArgs e)
 		{
+			selectedJob = (Job)jobCB.SelectedItem;
 			DisableEnableButtons();
+			FindAvailableDates(selectedJob);
 			UpdateLogList();
 		}
 
@@ -134,7 +168,8 @@ namespace JobTrackerUI
 		{
 			foreach (ListViewItem item in logLst.SelectedItems)
 			{
-				((Job)jobCB.SelectedItem).RemoveLog((Log)item.Tag);
+
+				selectedJob.RemoveLog((Log)item.Tag);
 			}
 			UpdateLogList();
 		}
@@ -290,15 +325,15 @@ namespace JobTrackerUI
 			DialogResult result = MessageBox.Show("Are you sure you want to remove the currently selected job?",
 				"Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 			if (result == DialogResult.No) return;
-			user.Jobs.Remove((Job)jobCB.SelectedItem);
+			user.Jobs.Remove(selectedJob);
 			jobCB.SelectedItem = null;
 			UpdateUser();
 		}
 
 		private void ModifyBtn_Click(object sender, EventArgs e)
 		{
-			((Job)jobCB.SelectedItem).RemoveLog((Log)logLst.SelectedItems[0].Tag);
-			NewLogForm newLog = new NewLogForm((Job)jobCB.SelectedItem, (Log)logLst.SelectedItems[0].Tag);
+			selectedJob.RemoveLog((Log)logLst.SelectedItems[0].Tag);
+			NewLogForm newLog = new NewLogForm(selectedJob, (Log)logLst.SelectedItems[0].Tag);
 			newLog.ShowDialog();
 			newLog.Dispose();
 			UpdateLogList();
@@ -308,6 +343,28 @@ namespace JobTrackerUI
 		{
 			if (logLst.SelectedItems.Count == 0) return;
 			((Log)logLst.SelectedItems[0].Tag).Remark = remarkTB.Text;
+		}
+
+		private void AvailableYearsCB_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			UpdateLogList();
+		}
+
+		private void AvailableMonthsCB_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			UpdateLogList();
+		}
+
+		private void AvailableDaysCB_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			UpdateLogList();
+		}
+
+		private void ClearFilterBtn_Click(object sender, EventArgs e)
+		{
+			availableDaysCB.SelectedIndex = -1;
+			availableMonthsCB.SelectedIndex = -1;
+			availableYearsCB.SelectedIndex = -1;
 		}
 	}
 }

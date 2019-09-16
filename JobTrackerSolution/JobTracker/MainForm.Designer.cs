@@ -44,9 +44,9 @@
 			this.Duration = ((System.Windows.Forms.ColumnHeader)(new System.Windows.Forms.ColumnHeader()));
 			this.label2 = new System.Windows.Forms.Label();
 			this.panel1 = new System.Windows.Forms.Panel();
-			this.textBox3 = new System.Windows.Forms.TextBox();
-			this.textBox2 = new System.Windows.Forms.TextBox();
-			this.textBox1 = new System.Windows.Forms.TextBox();
+			this.availableDaysCB = new System.Windows.Forms.ComboBox();
+			this.availableYearsCB = new System.Windows.Forms.ComboBox();
+			this.availableMonthsCB = new System.Windows.Forms.ComboBox();
 			this.clearFilterBtn = new System.Windows.Forms.Button();
 			this.label5 = new System.Windows.Forms.Label();
 			this.label4 = new System.Windows.Forms.Label();
@@ -207,10 +207,10 @@
 			// 
 			this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
 			this.panel1.BackColor = System.Drawing.SystemColors.ControlDark;
-			this.panel1.Controls.Add(this.textBox3);
-			this.panel1.Controls.Add(this.textBox2);
+			this.panel1.Controls.Add(this.availableDaysCB);
+			this.panel1.Controls.Add(this.availableYearsCB);
+			this.panel1.Controls.Add(this.availableMonthsCB);
 			this.panel1.Controls.Add(this.label2);
-			this.panel1.Controls.Add(this.textBox1);
 			this.panel1.Controls.Add(this.clearFilterBtn);
 			this.panel1.Controls.Add(this.label5);
 			this.panel1.Controls.Add(this.label4);
@@ -220,26 +220,32 @@
 			this.panel1.Size = new System.Drawing.Size(200, 176);
 			this.panel1.TabIndex = 8;
 			// 
-			// textBox3
+			// availableDaysCB
 			// 
-			this.textBox3.Location = new System.Drawing.Point(82, 111);
-			this.textBox3.Name = "textBox3";
-			this.textBox3.Size = new System.Drawing.Size(100, 20);
-			this.textBox3.TabIndex = 2;
+			this.availableDaysCB.FormattingEnabled = true;
+			this.availableDaysCB.Location = new System.Drawing.Point(76, 113);
+			this.availableDaysCB.Name = "availableDaysCB";
+			this.availableDaysCB.Size = new System.Drawing.Size(121, 21);
+			this.availableDaysCB.TabIndex = 15;
+			this.availableDaysCB.SelectedIndexChanged += new System.EventHandler(this.AvailableDaysCB_SelectedIndexChanged);
 			// 
-			// textBox2
+			// availableYearsCB
 			// 
-			this.textBox2.Location = new System.Drawing.Point(82, 51);
-			this.textBox2.Name = "textBox2";
-			this.textBox2.Size = new System.Drawing.Size(100, 20);
-			this.textBox2.TabIndex = 2;
+			this.availableYearsCB.FormattingEnabled = true;
+			this.availableYearsCB.Location = new System.Drawing.Point(76, 50);
+			this.availableYearsCB.Name = "availableYearsCB";
+			this.availableYearsCB.Size = new System.Drawing.Size(121, 21);
+			this.availableYearsCB.TabIndex = 14;
+			this.availableYearsCB.SelectedIndexChanged += new System.EventHandler(this.AvailableYearsCB_SelectedIndexChanged);
 			// 
-			// textBox1
+			// availableMonthsCB
 			// 
-			this.textBox1.Location = new System.Drawing.Point(82, 81);
-			this.textBox1.Name = "textBox1";
-			this.textBox1.Size = new System.Drawing.Size(100, 20);
-			this.textBox1.TabIndex = 2;
+			this.availableMonthsCB.FormattingEnabled = true;
+			this.availableMonthsCB.Location = new System.Drawing.Point(76, 83);
+			this.availableMonthsCB.Name = "availableMonthsCB";
+			this.availableMonthsCB.Size = new System.Drawing.Size(121, 21);
+			this.availableMonthsCB.TabIndex = 13;
+			this.availableMonthsCB.SelectedIndexChanged += new System.EventHandler(this.AvailableMonthsCB_SelectedIndexChanged);
 			// 
 			// clearFilterBtn
 			// 
@@ -249,6 +255,7 @@
 			this.clearFilterBtn.TabIndex = 9;
 			this.clearFilterBtn.Text = "Clear";
 			this.clearFilterBtn.UseVisualStyleBackColor = true;
+			this.clearFilterBtn.Click += new System.EventHandler(this.ClearFilterBtn_Click);
 			// 
 			// label5
 			// 
@@ -462,9 +469,6 @@
 		private System.Windows.Forms.Label label4;
 		private System.Windows.Forms.Label label3;
 		private System.Windows.Forms.Label label5;
-		private System.Windows.Forms.TextBox textBox3;
-		private System.Windows.Forms.TextBox textBox2;
-		private System.Windows.Forms.TextBox textBox1;
 		private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
 		private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
 		private System.Windows.Forms.Button addLogBtn;
@@ -481,6 +485,9 @@
 		private System.Windows.Forms.Button optionsBtn;
 		private System.Windows.Forms.Button clearFilterBtn;
 		private System.Windows.Forms.Button modifyJobBtn;
+		private System.Windows.Forms.ComboBox availableDaysCB;
+		private System.Windows.Forms.ComboBox availableYearsCB;
+		private System.Windows.Forms.ComboBox availableMonthsCB;
 	}
 }
 
