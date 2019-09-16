@@ -29,7 +29,7 @@ namespace JobTrackerLibrary
 			if (OverlappingLogException(log))
 				throw new ArgumentException("Cannot set a log that takes place during another log in the same job", "log");
 
-			int index = Logs.BinarySearch(log);
+			int index = Logs.BinarySearch(log, new ReverseLogComparer());
 			Logs.Insert(~index, log);
 		}
 
@@ -51,6 +51,11 @@ namespace JobTrackerLibrary
 		public Log Find(Predicate<Log> predicate)
 		{
 			return Logs.Find(predicate);
+		}
+
+		public List<Log> FindAll(Predicate<Log> predicate)
+		{
+			return Logs.FindAll(predicate);
 		}
 
 		public override string ToString()
@@ -77,6 +82,14 @@ namespace JobTrackerLibrary
 		{
 			if (other == null) return false;
 			return other.JobName == JobName;
+		}
+	}
+
+	class ReverseLogComparer : IComparer<Log>
+	{
+		public int Compare(Log one, Log two)
+		{
+			return -1 * one.CompareTo(two);
 		}
 	}
 }
