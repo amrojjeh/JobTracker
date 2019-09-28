@@ -69,18 +69,6 @@ namespace JobTrackerUI
 			AddDateToFilterPanel(log.Date);
 		}
 
-		public void UpdateLogList()
-		{
-			logLst.Items.Clear();
-			if (jobCB.SelectedItem == null) return;
-			if (availableYearsCB.SelectedIndex != -1 || availableMonthsCB.SelectedIndex != -1 || availableDaysCB.SelectedIndex != -1)
-			{
-				LogFilter.SetDate((int?)availableYearsCB.SelectedItem, (int?)availableMonthsCB.SelectedItem, (int?)availableDaysCB.SelectedItem);
-				LogFilter.FilterLogs(selectedJob).ForEach(x => AddLogToList(x));
-			}
-			else selectedJob.ForEach((log) => AddLogToList(log));
-		}
-
 		private void CreateJob()
 		{
 			string jobName = createJobTB.Text.Trim();
@@ -305,7 +293,6 @@ namespace JobTrackerUI
 		private void UpdateUser()
 		{
 			UpdateJobs();
-			if (jobCB.SelectedItem == null) return;
 			UpdateLogList();
 			Display_Username();
 		}
@@ -315,9 +302,21 @@ namespace JobTrackerUI
 			jobCB.Items.Clear();
 			if (user == null || user.Jobs.Count == 0) return;
 			Job[] jobs = new Job[user.Jobs.Count];
-			user.Jobs.CopyTo(jobs); // Takes O(n), which isn't a problem as there won't be 1M jobs
+			user.Jobs.CopyTo(jobs);
 			jobCB.Items.AddRange(jobs);
 			jobCB.SelectedIndex = 0;
+		}
+
+		public void UpdateLogList()
+		{
+			logLst.Items.Clear();
+			if (jobCB.SelectedItem == null) return;
+			if (availableYearsCB.SelectedIndex != -1 || availableMonthsCB.SelectedIndex != -1 || availableDaysCB.SelectedIndex != -1)
+			{
+				LogFilter.SetDate((int?)availableYearsCB.SelectedItem, (int?)availableMonthsCB.SelectedItem, (int?)availableDaysCB.SelectedItem);
+				LogFilter.FilterLogs(selectedJob).ForEach(x => AddLogToList(x));
+			}
+			else selectedJob.ForEach((log) => AddLogToList(log));
 		}
 
 		private void RemoveJobBtn_Click(object sender, EventArgs e)
@@ -326,7 +325,7 @@ namespace JobTrackerUI
 				"Confirm", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
 			if (result == DialogResult.No) return;
 			user.Jobs.Remove(selectedJob);
-			jobCB.SelectedItem = null;
+			selectedJob = null;
 			UpdateUser();
 		}
 
