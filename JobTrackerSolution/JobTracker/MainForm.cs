@@ -181,7 +181,7 @@ namespace JobTrackerUI
 
 		private void Save(string path, string file)
 		{
-			if (!Directory.Exists(path)) Directory.CreateDirectory(path);
+			Directory.CreateDirectory(path);
 			SaveToYaml(Path.Combine(path, file));
 		}
 
@@ -214,6 +214,7 @@ namespace JobTrackerUI
 
 		private bool IsThereDuplicateSave()
 		{
+			if (!Directory.Exists(defaultSaveDirectory)) return false;
 			foreach (string file in Directory.GetFiles(defaultSaveDirectory))
 				if (Path.GetFileName(file) == user.Username + ".yaml")
 					return true;
